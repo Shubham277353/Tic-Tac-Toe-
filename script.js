@@ -11,58 +11,75 @@ const gameBoard = (() => {
       board[index] = marker;
     }
   };
+  const reset = () => {
+    board = ["", "", "", "", "", "", "", "", ""];
+  };
 
-  return { getBoard, setBoard };
+  return { getBoard, setBoard, reset };
 })();
 
 const gameController = (() => {
   const player1 = createPlayers("Golu", "X");
   const player2 = createPlayers("Star", "O");
   let currentPlayer = player1;
-  let gameover = false ;
+  let gameover = false;
 
   const playRound = (index) => {
-    if (gameover) return ;
-    gameBoard.setBoard(index,currentPlayer.marker);
-    switchPlayer();
+    if (gameover) return;
+    gameBoard.setBoard(index, currentPlayer.marker);
     checkWinner();
-  }
+    switchPlayer();
 
+    console.log(gameover);
+  };
 
-  const switchPlayer = ()=>{
-    currentPlayer =  (currentPlayer === player1) ? player2 : player1;
-  }
+  const switchPlayer = () => {
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
+  };
 
-  const checkWinner = ()=>{
-
+  const checkWinner = () => {
     const board = gameBoard.getBoard();
     const winningCombo = [
-        [0,1,2],[3,4,5],[6,7,8],  //rows
-        [0,3,6],[1,4,7],[2,5,8], //columns
-        [0,4,8],[2,4,6]         //diagonals
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], //rows
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], //columns
+      [0, 4, 8],
+      [2, 4, 6], //diagonals
     ];
 
-    for(let combo of winningCombo){
-        const a = combo[0];
-        const b = combo[1];
-        const c = combo[2];
+    for (let combo of winningCombo) {
+      const a = combo[0];
+      const b = combo[1];
+      const c = combo[2];
 
-        if(board[a]&&board[a]===board[b]&&board[b]===board[c]){
-            console.log("Winner");
-            return gameover = true;
-        }
+      if (board[a] && board[a] === board[b] && board[b] === board[c]) {
+        console.log(`${board[a]} wins!`);
+        return (gameover = true);
+      }
     }
-  }
 
-    return {playRound};
+    if (board.includes("")) {
+      return (gameover = false);
+    } else {
+      console.log("its a tie ");
+      return (gameover = true);
+    }
+  };
+
+  return { playRound };
 })();
 
+gameController.playRound(4);
+gameController.playRound(2);
+gameController.playRound(8);
 gameController.playRound(0);
-gameController.playRound(5);
-gameController.playRound(2);
-gameController.playRound(6);
 gameController.playRound(1);
-gameController.playRound(2);
+gameController.playRound(7);
+gameController.playRound(3);
+gameController.playRound(5);
+gameController.playRound(6);
 
 console.log(gameBoard.getBoard());
-
