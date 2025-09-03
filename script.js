@@ -23,7 +23,8 @@ const gameController = (() => {
   const player2 = createPlayers("Star", "O");
   let currentPlayer = player1;
   let gameover = false;
-
+  const gameGrid = document.querySelectorAll(".game-grid");
+  
   const playRound = (index) => {
     if (gameover) return;
     gameBoard.setBoard(index, currentPlayer.marker);
@@ -72,14 +73,11 @@ const gameController = (() => {
   return { playRound };
 })();
 
-gameController.playRound(4);
-gameController.playRound(2);
-gameController.playRound(8);
-gameController.playRound(0);
-gameController.playRound(1);
-gameController.playRound(7);
-gameController.playRound(3);
-gameController.playRound(5);
-gameController.playRound(6);
 
-console.log(gameBoard.getBoard());
+/*
+* This section is completely for DOM manipulataion
+*/
+
+
+
+
