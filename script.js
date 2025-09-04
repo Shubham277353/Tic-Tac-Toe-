@@ -34,7 +34,9 @@ const gameController = (() => {
   const playRound = (index) => {
     if (gameover) return;
     gameBoard.setBoard(index, currentPlayer.marker);
-    cells[index].textContent = currentPlayer.marker;
+    if (cells[index] === "") {
+      cells[index].textContent = currentPlayer.marker;
+    }
     checkWinner();
     switchPlayer();
     console.log(gameBoard.getBoard());
@@ -76,9 +78,15 @@ const gameController = (() => {
     }
   };
 
-  function resetBoard() {
+  const resetBtn = document.querySelector("[data-reset]");
+  resetBtn.addEventListener("click", () => {
+    resetBoard();
+  });
+  const resetBoard = () => {
+    cells.textContent = "";
     gameBoard.reset();
-  }
-  
+    console.log(gameBoard.getBoard());
+  };
+
   return { playRound };
 })();
