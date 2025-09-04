@@ -2,56 +2,55 @@
 
 *,
 *::before,
-*::after{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    font-family: roboto;
+body {
+  font-family: roboto;
 }
 
 /* main styles starts here  */
 
-header{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid black;
-    padding: 1.1em;
-    gap: 0.8em;
-    background-color: cyan;
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  padding: 1.1em;
+  gap: 0.8em;
+  background-color: cyan;
 }
 
 .heading h1 {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .controll-buttons button {
-    font-weight: 400;
-    font-size: 1.3rem;
-    padding: 10px;
-    background-color: white;
-    border-radius: 10px;
-
+  font-weight: 400;
+  font-size: 1.3rem;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
 }
 
-.game-container{
-    display: flex;
-    justify-content: center;
-    
-    
+.game-container {
+  display: flex;
+  justify-content: center;
 }
-.game-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    margin: 20px;
-    border: 6px solid black;
+.game-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  margin: 20px;
+  border: 6px solid black;
 }
 .game-grid button {
-    padding: 80px;
-    border: 2px solid black;
+  font-size: 4rem;
+  width: 170px;
+  height: 170px;
+  border: 2px solid black;
 }

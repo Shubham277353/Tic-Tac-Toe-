@@ -23,15 +23,21 @@ const gameController = (() => {
   const player2 = createPlayers("Star", "O");
   let currentPlayer = player1;
   let gameover = false;
-  const gameGrid = document.querySelectorAll(".game-grid");
-  
+  const cells = document.querySelectorAll(".cells");
+
+  cells.forEach((cell, index) => {
+    cell.addEventListener("click", () => {
+      playRound(index);
+    });
+  });
+
   const playRound = (index) => {
     if (gameover) return;
     gameBoard.setBoard(index, currentPlayer.marker);
+    cells[index].textContent = currentPlayer.marker;
     checkWinner();
     switchPlayer();
-
-    console.log(gameover);
+    console.log(gameBoard.getBoard());
   };
 
   const switchPlayer = () => {
@@ -70,14 +76,9 @@ const gameController = (() => {
     }
   };
 
+  function resetBoard() {
+    gameBoard.reset();
+  }
+  
   return { playRound };
 })();
-
-
-/*
-* This section is completely for DOM manipulataion
-*/
-
-
-
-
