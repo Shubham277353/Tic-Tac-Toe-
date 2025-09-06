@@ -15,6 +15,9 @@ const gameBoard = (() => {
     board = ["", "", "", "", "", "", "", "", ""];
   };
 
+  const notStarted = ()=>{
+  }
+
   return { getBoard, setBoard, reset };
 })();
 
@@ -34,7 +37,7 @@ const gameController = (() => {
   const playRound = (index) => {
     if (gameover) return;
     gameBoard.setBoard(index, currentPlayer.marker);
-    if (cells[index] === "") {
+    if (cells[index].textContent === "") {
       cells[index].textContent = currentPlayer.marker;
     }
     checkWinner();
@@ -82,8 +85,11 @@ const gameController = (() => {
   resetBtn.addEventListener("click", () => {
     resetBoard();
   });
+
   const resetBoard = () => {
-    cells.textContent = "";
+    cells.forEach(resetCell =>{
+      resetCell.textContent = "";
+    })
     gameBoard.reset();
     console.log(gameBoard.getBoard());
   };
