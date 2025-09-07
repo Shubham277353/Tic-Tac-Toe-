@@ -61,7 +61,9 @@ header {
 }
 
 #start-game{
+  padding: 12px 24px;
   font-size: 1.1rem;
+  font-weight: 600;
   background-color: #3498db;
   border: none;
   box-shadow:  0 5px 0 #2675a9;
