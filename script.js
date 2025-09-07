@@ -1,6 +1,16 @@
+/* This module is for player creation.
+ * This module returns player and marker as objects
+ */
+
 const createPlayers = (name, marker) => {
   return { name, marker };
 };
+
+/**
+ * This module is for adding the gameboard.
+ * This module stores game board in the form of an array.
+ * It returns getBoard(),setBoard() and reset() as objects.
+ */
 
 const gameBoard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
@@ -15,11 +25,15 @@ const gameBoard = (() => {
     board = ["", "", "", "", "", "", "", "", ""];
   };
 
-  const notStarted = ()=>{
-  }
-
   return { getBoard, setBoard, reset };
 })();
+
+/**
+ * This is the game controller module it controls the flow of the game
+ * This contain playRound function which plays the game and checks winner
+ * It contains switchPlayer() which switches player after every move.
+ * it also contains checkwinner function which checks the winner of the game with prestored board postions if even one set of positions of the stored matches with the gameBaoard the winner is decided otherwise its a draw.
+ */
 
 const gameController = (() => {
   const player1 = createPlayers("Golu", "X");
@@ -81,15 +95,16 @@ const gameController = (() => {
     }
   };
 
-  const resetBtn = document.querySelector("[data-reset]");
-  resetBtn.addEventListener("click", () => {
+  const startBtn = document.querySelector("[data-start]");
+  startBtn.addEventListener("click", () => {
     resetBoard();
+    
   });
 
   const resetBoard = () => {
-    cells.forEach(resetCell =>{
+    cells.forEach((resetCell) => {
       resetCell.textContent = "";
-    })
+    });
     gameBoard.reset();
     console.log(gameBoard.getBoard());
   };
