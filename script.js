@@ -52,7 +52,14 @@ const gameController = (() => {
     if (gameover) return;
     gameBoard.setBoard(index, currentPlayer.marker);
     if (cells[index].textContent === "") {
-      cells[index].textContent = currentPlayer.marker;
+      if(currentPlayer.marker === "X"){
+        cells[index].textContent = currentPlayer.marker;
+        cells[index].classList.add("x");
+      }else{
+        cells[index].textContent = currentPlayer.marker;
+        cells[index].classList.add("o");
+      }
+
     }
     checkWinner();
     switchPlayer();
@@ -98,7 +105,7 @@ const gameController = (() => {
   const startBtn = document.querySelector("[data-start]");
   startBtn.addEventListener("click", () => {
     resetBoard();
-    
+    gameover = false;
   });
 
   const resetBoard = () => {

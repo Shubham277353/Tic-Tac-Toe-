@@ -10,6 +10,8 @@
 
 body {
   font-family: roboto;
+  background-image: url(https://media.gettyimages.com/id/1398147440/video/alphabet-background-blue-and-black-color-animation-moving-on-screen.jpg?s=640x640&k=20&c=gIzOGKXvwHCE96LoaBR9y_kzX-vuHKGUpybqgSLYzdc=);
+  background-size: cover;
 }
 
 /* main styles starts here  */
@@ -26,7 +28,8 @@ header {
 }
 
 .heading h1 {
-  font-weight: 600;
+  font-size: 3rem;
+  font-weight: 700;
 }
 
 .controll-buttons button {
@@ -39,21 +42,23 @@ header {
 
 .game-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 .game-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   margin: 20px;
-  border: 6px solid black;
+  border: 6px solid #333;
 }
 .cells{
   font-size: 4rem;
-  width: 170px;
-  height: 170px;
+  width: 150px;
+  height: 150px;
   border: 2px solid black;
-  background-color: pink;
+  background-color: #f0f0f0;
 }
 
 .cells:hover{
@@ -70,4 +75,25 @@ header {
   border-radius: 8px;
   cursor: pointer;
   color: white;
+  margin-top: 20px;
+}
+
+#display-heading{
+  padding: 8px 80px;
+  border: 3px solid black;
+  background-color: rgb(23, 22, 22);
+  color: white;
+  font-weight: 500;
+}
+
+.x , .o {
+  font-size: 4.5rem;
+  font-weight: 600;
+}
+
+.x{
+  color: #ff4d6d;
+}
+.o{
+  color: #00b4d8;
 }
