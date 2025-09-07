@@ -10,7 +10,7 @@
 
 body {
   font-family: roboto;
-  background-image: url(https://media.gettyimages.com/id/1398147440/video/alphabet-background-blue-and-black-color-animation-moving-on-screen.jpg?s=640x640&k=20&c=gIzOGKXvwHCE96LoaBR9y_kzX-vuHKGUpybqgSLYzdc=);
+  background-image: url(https://media.istockphoto.com/id/1353134152/video/neon-light-falling-on-the-floor-with-smoke-seamless-loop-video.jpg?s=640x640&k=20&c=p7Cx7x7mO7TzelIchPlOolMrBcOfTPyS6dBHnmEAMx0=);
   background-size: cover;
 }
 
@@ -21,10 +21,12 @@ header {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   padding: 1.1em;
   gap: 0.8em;
-  background-color: cyan;
+  background-color: none;
+  color: #39ff14;
+  
 }
 
 .heading h1 {
@@ -51,18 +53,19 @@ header {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   margin: 20px;
-  border: 6px solid #333;
+  border: 6px solid #39ff14;
 }
 .cells{
   font-size: 4rem;
   width: 150px;
   height: 150px;
-  border: 2px solid black;
-  background-color: #f0f0f0;
+  border: 2px solid #39ff14;
+  background-color: #1e1e1e;
 }
 
 .cells:hover{
   background-color: rgb(246, 225, 228);
+  background-color: rgba(57, 255, 20,0.4);
 }
 
 #start-game{
@@ -75,7 +78,7 @@ header {
   border-radius: 8px;
   cursor: pointer;
   color: white;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 #display-heading{
@@ -92,8 +95,8 @@ header {
 }
 
 .x{
-  color: #ff4d6d;
+  color: #ff00c8;
 }
 .o{
-  color: #00b4d8;
+  color: #00d4ff;
 }
