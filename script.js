@@ -49,25 +49,23 @@ const gameController = (() => {
   });
 
   const playRound = (index) => {
-    const startTwoPlayerGame = () => {
-      if (gameover) {
-        display.textContent = "START THE GAME TO PLAY";
-        return;
+    if (gameover) {
+      display.textContent = "START THE GAME TO PLAY";
+      return;
+    }
+    gameBoard.setBoard(index, currentPlayer.marker);
+    if (cells[index].textContent === "") {
+      if (currentPlayer.marker === "X") {
+        cells[index].textContent = currentPlayer.marker;
+        cells[index].classList.add("x");
+      } else {
+        cells[index].textContent = currentPlayer.marker;
+        cells[index].classList.add("o");
       }
-      gameBoard.setBoard(index, currentPlayer.marker);
-      if (cells[index].textContent === "") {
-        if (currentPlayer.marker === "X") {
-          cells[index].textContent = currentPlayer.marker;
-          cells[index].classList.add("x");
-        } else {
-          cells[index].textContent = currentPlayer.marker;
-          cells[index].classList.add("o");
-        }
-      }
-      checkWinner();
-      switchPlayer();
-      console.log(gameBoard.getBoard());
-    };
+    }
+    checkWinner();
+    switchPlayer();
+    console.log(gameBoard.getBoard());
   };
 
   const switchPlayer = () => {
@@ -138,7 +136,9 @@ const gameController = (() => {
 
 const gameMode = document.querySelector(".game-mode-choice-screen");
 const modes = document.querySelectorAll(".players");
-const gameContainer = document.querySelector(".game-container")
+const gameContainer = document.querySelector(".game-container");
+
+// click on either mode calls the respective game mode function
 
 modes.forEach((mode) => {
   mode.addEventListener("click", () => {
@@ -153,3 +153,7 @@ modes.forEach((mode) => {
     }
   });
 });
+
+// player details section 
+
+
