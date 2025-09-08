@@ -108,19 +108,31 @@ const gameController = (() => {
     }
   };
 
-  const startBtn = document.querySelector("[data-start]");
-  startBtn.addEventListener("click", () => {
+  // const startBtn = document.querySelector("[data-start]");
+  const gameContainer = document.querySelector(".game-container");
+  const form = document.getElementById("player-form");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    playerSetupScreen.style.display = "none";
+    gameContainer.style.display = "flex";
     gameStart();
-    resetBoard();
   });
 
-  const resetBoard = () => {
-    cells.forEach((resetCell) => {
-      resetCell.textContent = "";
-    });
-    gameBoard.reset();
-    console.log(gameBoard.getBoard());
-  };
+  // resetBoard();
+  // const resetBoard = () => {
+  //   cells.forEach((resetCell) => {
+  //     resetCell.textContent = "";
+  //   });
+  //   gameBoard.reset();
+  //   console.log(gameBoard.getBoard());
+  // };
 
   const gameStart = () => {
     gameover = false;
@@ -136,7 +148,7 @@ const gameController = (() => {
 
 const gameMode = document.querySelector(".game-mode-choice-screen");
 const modes = document.querySelectorAll(".players");
-const gameContainer = document.querySelector(".game-container");
+const playerSetupScreen = document.querySelector(".player-setup-screen");
 
 // click on either mode calls the respective game mode function
 
@@ -145,7 +157,7 @@ modes.forEach((mode) => {
     const selectedMode = mode.dataset.choice;
     console.log(selectedMode);
     gameMode.style.display = "none";
-    gameContainer.style.display = "flex";
+    playerSetupScreen.style.display = "flex";
     if (selectedMode === 2) {
       startTwoPlayerGame();
     } else if (selectedMode === 1) {
@@ -154,6 +166,11 @@ modes.forEach((mode) => {
   });
 });
 
-// player details section 
+// player details section
 
-
+document.getElementById("player-form").addEventListener("submit", (e) => {
+  if (!chosenMarker) {
+    e.preventDefault(); // stop submission only if marker not chosen
+    alert("Please choose a marker!");
+  }
+});

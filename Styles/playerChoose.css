@@ -1,93 +1,93 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap");
 
 :root {
-    --smaller-font: "Share Tech Mono", monospace;
-    --border: 2px solid white;
-}
-.player-setup-screen{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
+  --smaller-font: "Share Tech Mono", monospace;
+  --border: 2px solid white;
 }
 
-.player-setup{
-    border: var(--border);
-    margin: 20px;
-    padding: 15px;
+
+.player-setup-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  color: white;
 }
 
-.player-names{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 26px;
-    
+.player-setup {
+  border: var(--border);
+  margin: 20px;
+  padding: 15px;
+}
+
+.player-names {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 26px;
 }
 
 .player-info input {
-    font-size: 1.8rem;
-    padding: 0.5em;
-    font-family: var(--smaller-font);
-    border: none;
-    border-radius: 5px;
+  font-size: 1.8rem;
+  padding: 0.5em;
+  font-family: var(--smaller-font);
+  border: none;
+  border-radius: 5px;
 }
 
-.player-marker{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.player-marker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.choose-marker{
-    margin-top: 16px;
-    display: flex;
-    justify-content: center;
+.choose-marker {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
 }
 
-.marker{
-    font-size: 3rem;
-    cursor: pointer;
-    padding: 10px 50px;
-    border: none;
-    background-color: black;
+.marker {
+  font-size: 3rem;
+  cursor: pointer;
+  padding: 10px 50px;
+  border: none;
+  background-color: black;
 }
 
-.X{
-    border: 2px solid #333333;
-    border-radius: 12px 0 0 12px;
-    border-right: 0;
+.X {
+  border: 2px solid #333333;
+  border-radius: 12px 0 0 12px;
+  border-right: 0;
 }
-.X:hover{
-    background-color: hsl(313, 100%, 5%);
-}
-
-.O{
-    border: 2px solid #333333;
-    border-radius: 0 12px 12px 0;
-}
-.O:hover{
-    background-color: hsl(210, 100%, 5%);
+.X:hover {
+  background-color: hsl(313, 100%, 5%);
 }
 
-.start-button{
-    display: flex;
-    justify-content: center;
+.O {
+  border: 2px solid #333333;
+  border-radius: 0 12px 12px 0;
+}
+.O:hover {
+  background-color: hsl(210, 100%, 5%);
+}
+
+.start-button {
+  display: flex;
+  justify-content: center;
 }
 
 #start-game {
-    font-family: ;
-    font-size: 1.8rem;
-    margin-top: 20px;
-    padding: 10px 50px;
-    border-radius: 12px;
-    border: none;
-    font-family: monoton;
-    background-color: var(--neon-green-color);
-    cursor: pointer;
+  font-size: 1.8rem;
+  margin-top: 20px;
+  padding: 10px 50px;
+  border-radius: 12px;
+  border: none;
+  font-family: monoton;
+  background-color: var(--neon-green-color);
+  cursor: pointer;
 }
 
-#start-game:hover{
-    background-color: green;
+#start-game:hover {
+  background-color: green;
 }

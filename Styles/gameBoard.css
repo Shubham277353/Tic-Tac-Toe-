@@ -77,6 +77,17 @@ header {
   background-color: rgba(57, 255, 20, 0.4);
 }
 
+#start-game {
+  font-size: 1.8rem;
+  margin-top: 20px;
+  padding: 10px 50px;
+  border-radius: 12px;
+  border: none;
+  font-family: monoton;
+  background-color: var(--neon-green-color);
+  cursor: pointer;
+}
+
 #display-heading {
   padding: 8px 80px;
   border: 3px solid black;
