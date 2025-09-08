@@ -45,7 +45,7 @@ const gameController = (() => {
   cells.forEach((cell, index) => {
     cell.addEventListener("click", () => {
       playRound(index);
-    });
+    });g
   });
 
   const playRound = (index) => {
