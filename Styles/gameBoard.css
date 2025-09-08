@@ -19,7 +19,7 @@
 }
 
 body {
-  font-family: monoton;
+  font-family: var(--font-family);
   background-image: var(--bg-image);
   background-size: cover;
 }
@@ -38,6 +38,7 @@ header {
 }
 
 .heading h1 {
+  font-family: monoton;
   font-size: 3rem;
   font-weight: 700;
 }
