@@ -70,3 +70,24 @@
 .O:hover{
     background-color: hsl(210, 100%, 5%);
 }
+
+.start-button{
+    display: flex;
+    justify-content: center;
+}
+
+#start-game {
+    font-family: ;
+    font-size: 1.8rem;
+    margin-top: 20px;
+    padding: 10px 50px;
+    border-radius: 12px;
+    border: none;
+    font-family: monoton;
+    background-color: var(--neon-green-color);
+    cursor: pointer;
+}
+
+#start-game:hover{
+    background-color: green;
+}
