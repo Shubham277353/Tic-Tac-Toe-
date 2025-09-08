@@ -36,8 +36,6 @@ const gameBoard = (() => {
  */
 
 const gameController = (() => {
-  const player1 = createPlayers("Golu", "X");
-  const player2 = createPlayers("Star", "O");
   let currentPlayer = player1;
   let gameover = true;
   const cells = document.querySelectorAll(".cells");
@@ -111,6 +109,8 @@ const gameController = (() => {
   // const startBtn = document.querySelector("[data-start]");
   const gameContainer = document.querySelector(".game-container");
   const form = document.getElementById("player-form");
+  const player1Name = document.querySelector("#p1-name").value;
+  const player2Name = document.querySelector("#p2-name").value;
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -119,6 +119,9 @@ const gameController = (() => {
       form.reportValidity();
       return;
     }
+
+
+
 
     playerSetupScreen.style.display = "none";
     gameContainer.style.display = "flex";
@@ -167,10 +170,3 @@ modes.forEach((mode) => {
 });
 
 // player details section
-
-document.getElementById("player-form").addEventListener("submit", (e) => {
-  if (!chosenMarker) {
-    e.preventDefault(); // stop submission only if marker not chosen
-    alert("Please choose a marker!");
-  }
-});
