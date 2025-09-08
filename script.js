@@ -49,32 +49,34 @@ const gameController = (() => {
   });
 
   const playRound = (index) => {
-    if (gameover){
-      display.textContent = "START THE GAME TO PLAY";
-      return;} 
-    gameBoard.setBoard(index, currentPlayer.marker);
-    if (cells[index].textContent === "") {
-      if(currentPlayer.marker === "X"){
-        cells[index].textContent = currentPlayer.marker;
-        cells[index].classList.add("x");
-      }else{
-        cells[index].textContent = currentPlayer.marker;
-        cells[index].classList.add("o");
+    const startTwoPlayerGame = () => {
+      if (gameover) {
+        display.textContent = "START THE GAME TO PLAY";
+        return;
       }
-      
-    }
-    checkWinner();
-    switchPlayer();
-    console.log(gameBoard.getBoard());
+      gameBoard.setBoard(index, currentPlayer.marker);
+      if (cells[index].textContent === "") {
+        if (currentPlayer.marker === "X") {
+          cells[index].textContent = currentPlayer.marker;
+          cells[index].classList.add("x");
+        } else {
+          cells[index].textContent = currentPlayer.marker;
+          cells[index].classList.add("o");
+        }
+      }
+      checkWinner();
+      switchPlayer();
+      console.log(gameBoard.getBoard());
+    };
   };
-  
+
   const switchPlayer = () => {
-    if (gameover) return ;
+    if (gameover) return;
     currentPlayer = currentPlayer === player1 ? player2 : player1;
     display.textContent = `${currentPlayer.marker}'s Turn`;
   };
 
-  const display = document.querySelector('[data-display]');
+  const display = document.querySelector("[data-display]");
 
   const checkWinner = () => {
     const board = gameBoard.getBoard();
@@ -99,7 +101,7 @@ const gameController = (() => {
         return (gameover = true);
       }
     }
-    
+
     if (board.includes("")) {
       return (gameover = false);
     } else {
@@ -123,12 +125,11 @@ const gameController = (() => {
   };
 
   const gameStart = () => {
-    gameover = false ;
-  }
+    gameover = false;
+  };
 
   return { playRound };
 })();
-
 
 /**
  * This section contain the game mode screen DOM and logic.
@@ -137,11 +138,18 @@ const gameController = (() => {
 
 const gameMode = document.querySelector(".game-mode-choice-screen");
 const modes = document.querySelectorAll(".players");
+const gameContainer = document.querySelector(".game-container")
 
-modes.forEach(mode => {
-  mode.addEventListener("click",()=>{
+modes.forEach((mode) => {
+  mode.addEventListener("click", () => {
     const selectedMode = mode.dataset.choice;
     console.log(selectedMode);
-  })
-})
-
+    gameMode.style.display = "none";
+    gameContainer.style.display = "flex";
+    if (selectedMode === 2) {
+      startTwoPlayerGame();
+    } else if (selectedMode === 1) {
+      startSinglePlayerGame();
+    }
+  });
+});
