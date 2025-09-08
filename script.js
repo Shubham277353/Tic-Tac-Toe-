@@ -45,7 +45,7 @@ const gameController = (() => {
   cells.forEach((cell, index) => {
     cell.addEventListener("click", () => {
       playRound(index);
-    });g
+    });
   });
 
   const playRound = (index) => {
@@ -130,4 +130,18 @@ const gameController = (() => {
 })();
 
 
+/**
+ * This section contain the game mode screen DOM and logic.
+ * It handles three screens in total : gamemode , playerChoice and the main gameBoard.
+ */
+
+const gameMode = document.querySelector(".game-mode-choice-screen");
+const modes = document.querySelectorAll(".players");
+
+modes.forEach(mode => {
+  mode.addEventListener("click",()=>{
+    const selectedMode = mode.dataset.choice;
+    console.log(selectedMode);
+  })
+})
 
