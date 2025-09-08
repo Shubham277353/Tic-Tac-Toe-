@@ -1,4 +1,6 @@
 /* global styles */
+@import url("https://fonts.googleapis.com/css2?family=Monoton&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Orbitron:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 *,
 *::before,
@@ -9,7 +11,7 @@
 }
 
 body {
-  font-family: roboto;
+  font-family: monoton;
   background-image: url(https://media.istockphoto.com/id/1353134152/video/neon-light-falling-on-the-floor-with-smoke-seamless-loop-video.jpg?s=640x640&k=20&c=p7Cx7x7mO7TzelIchPlOolMrBcOfTPyS6dBHnmEAMx0=);
   background-size: cover;
 }
@@ -26,7 +28,6 @@ header {
   gap: 0.8em;
   background-color: none;
   color: #39ff14;
-  
 }
 
 .heading h1 {
@@ -55,7 +56,7 @@ header {
   margin: 20px;
   border: 6px solid #39ff14;
 }
-.cells{
+.cells {
   font-size: 4rem;
   width: 150px;
   height: 150px;
@@ -63,40 +64,43 @@ header {
   background-color: #1e1e1e;
 }
 
-.cells:hover{
+.cells:hover {
   background-color: rgb(246, 225, 228);
-  background-color: rgba(57, 255, 20,0.4);
+  background-color: rgba(57, 255, 20, 0.4);
 }
 
-#start-game{
+#start-game {
   padding: 12px 24px;
   font-size: 1.1rem;
   font-weight: 600;
   background-color: #3498db;
   border: none;
-  box-shadow:  0 5px 0 #2675a9;
+  box-shadow: 0 5px 0 #2675a9;
   border-radius: 8px;
   cursor: pointer;
   color: white;
-  margin-top: 10px;
+  margin-top: -5px;
+  font-family: orbitron;
 }
 
-#display-heading{
+#display-heading {
   padding: 8px 80px;
   border: 3px solid black;
-  background-color: rgb(23, 22, 22);
+  background-color: rgb(0, 0, 0);
   color: white;
-  font-weight: 500;
+  font-weight: 700;
+  font-family: orbitron;
 }
 
-.x , .o {
+.x,
+.o {
   font-size: 4.5rem;
   font-weight: 600;
 }
 
-.x{
+.x {
   color: #ff00c8;
 }
-.o{
+.o {
   color: #00d4ff;
 }

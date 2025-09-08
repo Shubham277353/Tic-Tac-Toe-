@@ -39,7 +39,7 @@ const gameController = (() => {
   const player1 = createPlayers("Golu", "X");
   const player2 = createPlayers("Star", "O");
   let currentPlayer = player1;
-  let gameover = false;
+  let gameover = true;
   const cells = document.querySelectorAll(".cells");
 
   cells.forEach((cell, index) => {
@@ -49,7 +49,9 @@ const gameController = (() => {
   });
 
   const playRound = (index) => {
-    if (gameover) return;
+    if (gameover){
+      display.textContent = "START THE GAME TO PLAY";
+      return;} 
     gameBoard.setBoard(index, currentPlayer.marker);
     if (cells[index].textContent === "") {
       if(currentPlayer.marker === "X"){
@@ -59,16 +61,20 @@ const gameController = (() => {
         cells[index].textContent = currentPlayer.marker;
         cells[index].classList.add("o");
       }
-
+      
     }
     checkWinner();
     switchPlayer();
     console.log(gameBoard.getBoard());
   };
-
+  
   const switchPlayer = () => {
+    if (gameover) return ;
     currentPlayer = currentPlayer === player1 ? player2 : player1;
+    display.textContent = `${currentPlayer.marker}'s Turn`;
   };
+
+  const display = document.querySelector('[data-display]');
 
   const checkWinner = () => {
     const board = gameBoard.getBoard();
@@ -89,23 +95,23 @@ const gameController = (() => {
       const c = combo[2];
 
       if (board[a] && board[a] === board[b] && board[b] === board[c]) {
-        console.log(`${board[a]} wins!`);
+        display.textContent = `${board[a]} wins!`;
         return (gameover = true);
       }
     }
-
+    
     if (board.includes("")) {
       return (gameover = false);
     } else {
-      console.log("its a tie ");
+      display.textContent = `Its a tie`;
       return (gameover = true);
     }
   };
 
   const startBtn = document.querySelector("[data-start]");
   startBtn.addEventListener("click", () => {
+    gameStart();
     resetBoard();
-    gameover = false;
   });
 
   const resetBoard = () => {
@@ -115,6 +121,10 @@ const gameController = (() => {
     gameBoard.reset();
     console.log(gameBoard.getBoard());
   };
+
+  const gameStart = () => {
+    gameover = false ;
+  }
 
   return { playRound };
 })();
