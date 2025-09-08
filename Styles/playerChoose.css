@@ -2,7 +2,7 @@
 
 :root {
     --smaller-font: "Share Tech Mono", monospace;
-    --border: 2px solid white
+    --border: 2px solid white;
 }
 .player-setup-screen{
     display: flex;
@@ -41,22 +41,32 @@
 }
 
 .choose-marker{
-    margin-top: 26px;
+    margin-top: 16px;
     display: flex;
     justify-content: center;
 }
 
 .marker{
-    border: var(--border);
     font-size: 3rem;
     cursor: pointer;
     padding: 10px 50px;
     border: none;
+    background-color: black;
 }
 
 .X{
+    border: 2px solid #333333;
     border-radius: 12px 0 0 12px;
+    border-right: 0;
 }
+.X:hover{
+    background-color: hsl(313, 100%, 5%);
+}
+
 .O{
-    border-radius: 12px 0 0 12px;
+    border: 2px solid #333333;
+    border-radius: 0 12px 12px 0;
+}
+.O:hover{
+    background-color: hsl(210, 100%, 5%);
 }

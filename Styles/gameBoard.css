@@ -14,7 +14,7 @@
   --font-family: Orbitron;
   --bg-image: url(/images/background.jpg);
   --neon-green-color: #39ff14;
-  --x-color: #ff00c8;
+  --x-color: hsl(313, 100%, 50%);
   --o-color: #00d4ff;
 }
 
