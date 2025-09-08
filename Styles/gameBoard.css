@@ -12,7 +12,7 @@
 
 :root {
   --font-family: Orbitron;
-  --bg-image: url(https://media.istockphoto.com/id/1353134152/video/neon-light-falling-on-the-floor-with-smoke-seamless-loop-video.jpg?s=640x640&k=20&c=p7Cx7x7mO7TzelIchPlOolMrBcOfTPyS6dBHnmEAMx0=);
+  --bg-image: url(/images/background.jpg);
   --neon-green-color: #39ff14;
   --x-color: #ff00c8;
   --o-color: #00d4ff;

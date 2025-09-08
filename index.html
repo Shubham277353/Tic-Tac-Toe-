@@ -36,19 +36,28 @@
 
     <!--Section 2: Player Info-->
     <div class="player-setup-screen">
+        <h1>PLAYER SETUP</h1>
         <div class="player-setup">
-            <h1>PLAYER SETUP</h1>
-            <div class="player1-info">
-                <input type="text" id="p1-name" placeholder="Player1 name">
+            <div class="player-names">
+                <div class="player-info">
+                    <input type="text" id="p1-name" placeholder="Player1 name">
+                </div>
+                <div class="player-info">
+                    <input type="text" id="p2-name" placeholder="Player2 name">
+                </div>
             </div>
-            <div class="player2-info">
-                <input type="text" id="p2-name" placeholder="Player2 name">
+            <div class="player-marker">
+                <h2>CHOOSE MARKER</h2>
+                <div class="choose-marker">
+                    <button class="marker x X">X</button>
+                    <button class="marker o O">O</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!--Section 3: GameBoard-->
-    <div class="game-container" style="display: none;">
+    <div class="game-container" >
         <button id="start-game" data-start>Start Game</button>
         <div class="game-grid">
             <button class="cells"></button>
