@@ -41,13 +41,15 @@ const gameBoard = (() => {
  */
 
 const gameController = (() => {
+  // createPlayers.setPlayer("GOLU", "O");
+  // createPlayers.setPlayer("GOlu", "X");
+  // const playerArray = createPlayers.getPlayer();
+  // const player1 = playerArray[0].name;
+  // const player2 = playerArray[1].name;
 
-  const playerArray = createPlayers.getPlayer();
-  const player1 = playerArray[0].name;
-  const player2 = playerArray[0].name;
+  // console.log(player1);
 
-
-  let currentPlayer = player1;
+  // let currentPlayer = player1;
   let gameover = true;
   const cells = document.querySelectorAll(".cells");
 
@@ -117,49 +119,6 @@ const gameController = (() => {
     }
   };
 
-  // const startBtn = document.querySelector("[data-start]");
-  const gameContainer = document.querySelector(".game-container");
-  const form = document.getElementById("player-form");
-  const playerMarker = document.querySelectorAll(".marker");
-
-  playerMarker.forEach((marker) => {
-    marker.addEventListener("click", () => {
-      let chosenMarker = marker.dataset.mark;
-      let player1Marker = chosenMarker;
-      let player2Marker = chosenMarker === "X" ? "O" : "X";
-    });
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-    const player1Name = document.querySelector("#p1-name").value;
-    const player2Name = document.querySelector("#p2-name").value;
-    createPlayers.setPlayer(player1Name, "O");
-    createPlayers.setPlayer(player2Name, "X");
-
-    playerSetupScreen.style.display = "none";
-    gameContainer.style.display = "flex";
-    gameStart();
-  });
-
-  // resetBoard();
-  // const resetBoard = () => {
-  //   cells.forEach((resetCell) => {
-  //     resetCell.textContent = "";
-  //   });
-  //   gameBoard.reset();
-  //   console.log(gameBoard.getBoard());
-  // };
-
-  const gameStart = () => {
-    gameover = false;
-  };
-
   return { playRound };
 })();
 
@@ -171,8 +130,6 @@ const gameController = (() => {
 const gameMode = document.querySelector(".game-mode-choice-screen");
 const modes = document.querySelectorAll(".players");
 const playerSetupScreen = document.querySelector(".player-setup-screen");
-
-// click on either mode calls the respective game mode function
 
 modes.forEach((mode) => {
   mode.addEventListener("click", () => {
@@ -188,4 +145,48 @@ modes.forEach((mode) => {
   });
 });
 
-// player details section
+/**
+ * player setup module section , in this the players name and marker are set.
+ * this returns the players and markers.
+ */
+
+const playersDetails = () => {
+  const gameContainer = document.querySelector(".game-container");
+  const form = document.getElementById("player-form");
+  const playerMarker = document.querySelectorAll(".marker");
+
+  // Attach listeners once, at the beginning
+  playerMarker.forEach((marker) => {
+    marker.addEventListener("click", () => {
+      const player1Name = document.querySelector("#p1-name").value;
+      const player2Name = document.querySelector("#p2-name").value;
+
+      let chosenMarker = marker.dataset.mark;
+      let player1Marker = chosenMarker;
+      let player2Marker = chosenMarker === "X" ? "O" : "X";
+
+      createPlayers.setPlayer(player1Name, player1Marker);
+      createPlayers.setPlayer(player2Name, player2Marker);
+
+      console.log(createPlayers.getPlayer());
+
+      // hide setup screen only AFTER marker is chosen
+      playerSetupScreen.style.display = "none";
+      gameContainer.style.display = "flex";
+    });
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // Instead of hiding here, wait for marker selection
+    console.log("Form submitted, now choose a marker!");
+  });
+};
+
+playersDetails();
