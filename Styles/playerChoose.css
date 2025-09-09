@@ -73,7 +73,7 @@
 }
 
 .start-button {
-  display: none;
+  display: flex;
   justify-content: center;
 }
 
