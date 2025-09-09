@@ -155,46 +155,25 @@ const playersDetails = () => {
   const form = document.getElementById("player-form");
   const playerMarker = document.querySelectorAll(".marker");
 
-  const initPlayers = () => {
-    const player1Name =
-      document.querySelector("#p1-name").value.trim() || "Player 1";
-    const player2Name =
-      document.querySelector("#p2-name").value.trim() || "Player 2";
-
-    const existingPlayers = createPlayers.getPlayer();
-    if (existingPlayers.length === "0") {
-      createPlayers.setPlayer(player1Name, null);
-      createPlayers.setPlayer(player2Name, null);
-    } else {
-      existingPlayers[0].name = player1Name;
-      existingPlayers[1].name = player2Name;
-    }
-  };
-
   playerMarker.forEach((marker) => {
     marker.addEventListener("click", () => {
-      initPlayers();
+      const player1Name =
+        document.querySelector("#p1-name").value.trim() || "Player 1";
+      const player2Name =
+        document.querySelector("#p2-name").value.trim() || "Player 2";
 
       let chosenMarker = marker.dataset.mark;
-      const players = createPlayers.getPlayer();
-      players[0].markers = chosenMarker;
-      players[1].markers = chosenMarker === "X" ? "O" : "X";
+      let player1Marker = chosenMarker;
+      let player2Marker = chosenMarker === "X" ? "O" : "X";
+
+      createPlayers.setPlayer(player1Name, player1Marker);
+      createPlayers.setPlayer(player2Name, player2Marker);
+
       console.log("Players after marker clicked:", createPlayers.getPlayer());
+
+      playerSetupScreen.style.display = "none";
+      gameContainer.style.display = "flex";
     });
-  });
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
-      return;
-    }
-
-    initPlayers();
-
-    playerSetupScreen.style.display = "none";
-    gameContainer.style.display = "flex";
   });
 };
 
