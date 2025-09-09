@@ -2,9 +2,14 @@
  * This module returns player and marker as objects
  */
 
-const createPlayers = (name, marker) => {
-  return { name, marker };
-};
+const createPlayers = (() => {
+  let player = [];
+  const getPlayer = () => player;
+  const setPlayer = (name, marker) => {
+    player.push({ name, marker });
+  };
+  return { getPlayer, setPlayer };
+})();
 
 /**
  * This module is for adding the gameboard.
@@ -36,6 +41,12 @@ const gameBoard = (() => {
  */
 
 const gameController = (() => {
+
+  const playerArray = createPlayers.getPlayer();
+  const player1 = playerArray[0].name;
+  const player2 = playerArray[0].name;
+
+
   let currentPlayer = player1;
   let gameover = true;
   const cells = document.querySelectorAll(".cells");
@@ -109,8 +120,15 @@ const gameController = (() => {
   // const startBtn = document.querySelector("[data-start]");
   const gameContainer = document.querySelector(".game-container");
   const form = document.getElementById("player-form");
-  const player1Name = document.querySelector("#p1-name").value;
-  const player2Name = document.querySelector("#p2-name").value;
+  const playerMarker = document.querySelectorAll(".marker");
+
+  playerMarker.forEach((marker) => {
+    marker.addEventListener("click", () => {
+      let chosenMarker = marker.dataset.mark;
+      let player1Marker = chosenMarker;
+      let player2Marker = chosenMarker === "X" ? "O" : "X";
+    });
+  });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -119,9 +137,10 @@ const gameController = (() => {
       form.reportValidity();
       return;
     }
-
-
-
+    const player1Name = document.querySelector("#p1-name").value;
+    const player2Name = document.querySelector("#p2-name").value;
+    createPlayers.setPlayer(player1Name, "O");
+    createPlayers.setPlayer(player2Name, "X");
 
     playerSetupScreen.style.display = "none";
     gameContainer.style.display = "flex";
