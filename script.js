@@ -29,9 +29,43 @@ const gameBoard = (() => {
   const reset = () => {
     board = ["", "", "", "", "", "", "", "", ""];
   };
-
+  
   return { getBoard, setBoard, reset };
 })();
+
+/**
+ * player setup module section , in this the players name and marker are set.
+ * this returns the players and markers.
+*/
+
+const playerSetupScreen = document.querySelector(".player-setup-screen");
+
+const playersDetails = (() => {
+  const gameContainer = document.querySelector(".game-container");
+  const playerMarker = document.querySelectorAll(".marker");
+
+  playerMarker.forEach((marker) => {
+    marker.addEventListener("click", () => {
+      const player1Name =
+        document.querySelector("#p1-name").value.trim() || "Player 1";
+      const player2Name =
+        document.querySelector("#p2-name").value.trim() || "Player 2";
+
+      let chosenMarker = marker.dataset.mark;
+      let player1Marker = chosenMarker;
+      let player2Marker = chosenMarker === "X" ? "O" : "X";
+
+      createPlayers.setPlayer(player1Name, player1Marker);
+      createPlayers.setPlayer(player2Name, player2Marker);
+
+      console.log("Players after marker clicked:", createPlayers.getPlayer());
+
+      playerSetupScreen.style.display = "none";
+      gameContainer.style.display = "flex";
+    });
+  });
+})();
+
 
 /**
  * This is the game controller module it controls the flow of the game
@@ -41,36 +75,30 @@ const gameBoard = (() => {
  */
 
 const gameController = (() => {
-  // createPlayers.setPlayer("GOLU", "O");
-  // createPlayers.setPlayer("GOlu", "X");
-  // const playerArray = createPlayers.getPlayer();
-  // const player1 = playerArray[0].name;
-  // const player2 = playerArray[1].name;
 
-  // console.log(player1);
+  let gameover = false;
 
-  // let currentPlayer = player1;
-  let gameover = true;
-  const cells = document.querySelectorAll(".cells");
+  const playerArray = createPlayers.getPlayer();
+  const player1 = playerArray[0].name;
+  const player2 = playerArray[1].name;
+  console.log(player1.name);
 
-  cells.forEach((cell, index) => {
-    cell.addEventListener("click", () => {
-      playRound(index);
-    });
-  });
+  let currentPlayer = player1;
 
   const playRound = (index) => {
+
+
     if (gameover) {
       display.textContent = "START THE GAME TO PLAY";
       return;
     }
-    gameBoard.setBoard(index, currentPlayer.marker);
+    gameBoard.setBoard(index, currentPlayer.markers);
     if (cells[index].textContent === "") {
-      if (currentPlayer.marker === "X") {
-        cells[index].textContent = currentPlayer.marker;
+      if (currentPlayer.markers === "X") {
+        cells[index].textContent = currentPlayer.markers;
         cells[index].classList.add("x");
       } else {
-        cells[index].textContent = currentPlayer.marker;
+        cells[index].textContent = currentPlayer.markers;
         cells[index].classList.add("o");
       }
     }
@@ -79,10 +107,18 @@ const gameController = (() => {
     console.log(gameBoard.getBoard());
   };
 
+    const cells = document.querySelectorAll(".cells");
+
+  cells.forEach((cell, index) => {
+    cell.addEventListener("click", () => {
+      playRound(index);
+    });
+  });
+
   const switchPlayer = () => {
     if (gameover) return;
     currentPlayer = currentPlayer === player1 ? player2 : player1;
-    display.textContent = `${currentPlayer.marker}'s Turn`;
+    display.textContent = `${currentPlayer.markers}'s Turn`;
   };
 
   const display = document.querySelector("[data-display]");
@@ -129,7 +165,6 @@ const gameController = (() => {
 
 const gameMode = document.querySelector(".game-mode-choice-screen");
 const modes = document.querySelectorAll(".players");
-const playerSetupScreen = document.querySelector(".player-setup-screen");
 
 modes.forEach((mode) => {
   mode.addEventListener("click", () => {
@@ -145,36 +180,3 @@ modes.forEach((mode) => {
   });
 });
 
-/**
- * player setup module section , in this the players name and marker are set.
- * this returns the players and markers.
- */
-
-const playersDetails = () => {
-  const gameContainer = document.querySelector(".game-container");
-  const form = document.getElementById("player-form");
-  const playerMarker = document.querySelectorAll(".marker");
-
-  playerMarker.forEach((marker) => {
-    marker.addEventListener("click", () => {
-      const player1Name =
-        document.querySelector("#p1-name").value.trim() || "Player 1";
-      const player2Name =
-        document.querySelector("#p2-name").value.trim() || "Player 2";
-
-      let chosenMarker = marker.dataset.mark;
-      let player1Marker = chosenMarker;
-      let player2Marker = chosenMarker === "X" ? "O" : "X";
-
-      createPlayers.setPlayer(player1Name, player1Marker);
-      createPlayers.setPlayer(player2Name, player2Marker);
-
-      console.log("Players after marker clicked:", createPlayers.getPlayer());
-
-      playerSetupScreen.style.display = "none";
-      gameContainer.style.display = "flex";
-    });
-  });
-};
-
-playersDetails();
