@@ -75,44 +75,39 @@ const playersDetails = (() => {
  */
 
 const gameController = (() => {
-
   let gameover = false;
 
   const playerArray = createPlayers.getPlayer();
-  const player1 = playerArray[0].name;
-  const player2 = playerArray[1].name;
-  console.log(player1.name);
+  if (playerArray.length < 2) {
+    console.error("Players not initialized yet!");
+    return {};
+  }
 
+  let player1 = playerArray[0];
+  let player2 = playerArray[1];
   let currentPlayer = player1;
 
   const playRound = (index) => {
-
-
     if (gameover) {
       display.textContent = "START THE GAME TO PLAY";
       return;
     }
+
     gameBoard.setBoard(index, currentPlayer.markers);
+
     if (cells[index].textContent === "") {
-      if (currentPlayer.markers === "X") {
-        cells[index].textContent = currentPlayer.markers;
-        cells[index].classList.add("x");
-      } else {
-        cells[index].textContent = currentPlayer.markers;
-        cells[index].classList.add("o");
-      }
+      cells[index].textContent = currentPlayer.markers;
+      cells[index].classList.add(currentPlayer.markers.toLowerCase());
     }
+
     checkWinner();
     switchPlayer();
     console.log(gameBoard.getBoard());
   };
 
-    const cells = document.querySelectorAll(".cells");
-
+  const cells = document.querySelectorAll(".cells");
   cells.forEach((cell, index) => {
-    cell.addEventListener("click", () => {
-      playRound(index);
-    });
+    cell.addEventListener("click", () => playRound(index));
   });
 
   const switchPlayer = () => {
@@ -126,32 +121,22 @@ const gameController = (() => {
   const checkWinner = () => {
     const board = gameBoard.getBoard();
     const winningCombo = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8], //rows
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8], //columns
-      [0, 4, 8],
-      [2, 4, 6], //diagonals
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // cols
+      [0, 4, 8], [2, 4, 6], // diagonals
     ];
 
-    for (let combo of winningCombo) {
-      const a = combo[0];
-      const b = combo[1];
-      const c = combo[2];
-
+    for (let [a, b, c] of winningCombo) {
       if (board[a] && board[a] === board[b] && board[b] === board[c]) {
         display.textContent = `${board[a]} wins!`;
-        return (gameover = true);
+        gameover = true;
+        return;
       }
     }
 
-    if (board.includes("")) {
-      return (gameover = false);
-    } else {
-      display.textContent = `Its a tie`;
-      return (gameover = true);
+    if (!board.includes("")) {
+      display.textContent = "It's a tie!";
+      gameover = true;
     }
   };
 
@@ -163,7 +148,7 @@ const gameController = (() => {
  * It handles three screens in total : gamemode , playerChoice and the main gameBoard.
  */
 
-const gameMode = document.querySelector(".game-mode-choice-screen");
+const gameMode = document.querySelector(".game-modes");
 const modes = document.querySelectorAll(".players");
 
 modes.forEach((mode) => {
