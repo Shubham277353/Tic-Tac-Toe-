@@ -1,5 +1,44 @@
-#dialog{
-    position: fixed;
-    top: 50%;
-    left: 50%;
+@import url("https://fonts.googleapis.com/css2?family=Audiowide&family=Share+Tech+Mono&display=swap");
+
+#dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid white;
+  border-radius: 12px;
+  padding: 20px 30px;
+  background-image: url(https://media.istockphoto.com/id/1282324577/vector/arena-blue-and-yellow-lights-background.jpg?s=612x612&w=0&k=20&c=xhM60vw98lU_-oVWPhBEblMUtuKtDZ2plBpNubWxCFQ=);
+  background-size: cover;
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+#dialog::backdrop {
+  background: rgb(0, 0, 0, 0.5);
+}
+
+.text {
+  font-size: 1.8rem;
+  color: rgb(255, 242, 0);
+  text-shadow: 1px 1px 8px rgb(255, 0, 0);
+  font-family: var(--font-family);
+}
+.win-text {
+  font-size: 2.5rem;
+  color: gold;
+  text-shadow: 1px 1px 8px rgb(255, 217, 0);
+  font-family: "Audiowide", sans-serif;
+}
+
+.dialog-buttons {
+  margin: 12px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  color: var(--font-color);
+  background-color: var(--neon-green-color);
+  font-size: 1.5rem;
+  padding: 10px 14px;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
 }

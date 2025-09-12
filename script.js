@@ -150,6 +150,39 @@ const gameController = () => {
     }
   };
 
+  // dialog box opens when either player wins.
+  // displays play again and home buttons .
+
+  const showDialog = () => {
+    const dialog = document.querySelector("#dialog");
+    const playAgain = document.querySelector("#play-again-btn");
+    const homeBtn = document.querySelector("#home-btn");
+    const gameContainer = document.querySelector(".game-container");
+    dialog.showModal();
+    celebrateWin();
+
+    playAgain.addEventListener("click", () => {
+      resetBoard();
+      dialog.close();
+    });
+    
+    homeBtn.addEventListener("click", () => {
+      resetBoard();
+      gameContainer.style.display = "none";
+      gameMode.style.display = "flex";
+      dialog.close();
+    });
+
+    
+  };
+
+  const resetBoard = ()=>{
+    cells.forEach((resetCell) => {
+        resetCell.textContent = "";
+      });
+      gameBoard.reset();
+  }
+
   return { playRound };
 };
 
@@ -175,24 +208,28 @@ modes.forEach((mode) => {
   });
 });
 
-// dialog box opens when either player wins.
-// displays play again and home buttons .
+//shows confetti
 
-const showDialog = () => {
-  const dialog = document.querySelector("#dialog");
-  const playAgain = document.querySelector("#play-again-btn");
-  const homeBtn = document.querySelector("#home-btn");
-  dialog.showModal();
+function celebrateWin() {
+  var duration = 3 * 1000; // 3 seconds
+  var end = Date.now() + duration;
 
-  playAgain.addEventListener("click", () => {
-    cells.forEach((resetCell) => {
-      resetCell.textContent = "";
+  (function frame() {
+    confetti({
+      particleCount: 5,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
     });
-    gameBoard.reset();
-  });
+    confetti({
+      particleCount: 5,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 },
+    });
 
-  homeBtn.addEventListener("click", () => {
-    gameContainer.style.display = "none";
-    gameMode.style.display = "flex";
-  });
-};
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
+}

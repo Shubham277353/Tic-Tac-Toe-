@@ -1,9 +1,0 @@
-
-  resetBoard();
-  const resetBoard = () => {
-    cells.forEach((resetCell) => {
-      resetCell.textContent = "";
-    });
-    gameBoard.reset();
-    console.log(gameBoard.getBoard());
-  };
