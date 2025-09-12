@@ -11,6 +11,7 @@
 }
 
 :root {
+  --font-color: white;
   --font-family: Orbitron;
   --bg-image: url(/images/background.jpg);
   --neon-green-color: #39ff14;
@@ -56,6 +57,7 @@ header {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  margin-top: -1rem;
 }
 .game-grid {
   display: grid;
@@ -77,10 +79,10 @@ header {
   background-color: rgba(57, 255, 20, 0.4);
 }
 
-#start-game {
+#reset-game {
   font-size: 1.8rem;
   margin-top: 20px;
-  padding: 10px 50px;
+  padding: 10px 30px;
   border-radius: 12px;
   border: none;
   font-family: monoton;
@@ -95,6 +97,7 @@ header {
   color: white;
   font-weight: 700;
   font-family: var(--font-family);
+  margin-top: 1rem;
 }
 
 .x,

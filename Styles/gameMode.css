@@ -1,5 +1,5 @@
 .game-mode-choice-screen{
-    color: white;
+    color: var(--font-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
