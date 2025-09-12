@@ -6,8 +6,10 @@ const createPlayers = (() => {
   let player = [];
   const getPlayer = () => player;
   const setPlayer = (name, markers) => {
+    if (player.length >= 2) player = []; // reset if already 2
     player.push({ name, markers });
   };
+
   return { getPlayer, setPlayer };
 })();
 
@@ -153,35 +155,38 @@ const gameController = () => {
   // dialog box opens when either player wins.
   // displays play again and home buttons .
 
+  const dialog = document.querySelector("#dialog");
+  const playAgain = document.querySelector("#play-again-btn");
+  const homeBtn = document.querySelector("#home-btn");
+  const gameContainer = document.querySelector(".game-container");
+
+  playAgain.addEventListener("click", () => {
+    resetBoard();
+    dialog.close();
+  });
+
+  homeBtn.addEventListener("click", () => {
+    resetBoard();
+    gameContainer.style.display = "none";
+    gameMode.style.display = "flex";
+    dialog.close();
+  });
+
   const showDialog = () => {
-    const dialog = document.querySelector("#dialog");
-    const playAgain = document.querySelector("#play-again-btn");
-    const homeBtn = document.querySelector("#home-btn");
-    const gameContainer = document.querySelector(".game-container");
     dialog.showModal();
     celebrateWin();
-
-    playAgain.addEventListener("click", () => {
-      resetBoard();
-      dialog.close();
-    });
-    
-    homeBtn.addEventListener("click", () => {
-      resetBoard();
-      gameContainer.style.display = "none";
-      gameMode.style.display = "flex";
-      dialog.close();
-    });
-
-    
   };
 
-  const resetBoard = ()=>{
+  const resetBoard = () => {
     cells.forEach((resetCell) => {
-        resetCell.textContent = "";
-      });
-      gameBoard.reset();
-  }
+      resetCell.textContent = "";
+      resetCell.classList.remove("x", "o");
+    });
+    gameBoard.reset();
+    gameover = false;
+    currentPlayer = player1;
+    display.textContent = `${currentPlayer.name}'s Turn`;
+  };
 
   return { playRound };
 };
@@ -210,11 +215,16 @@ modes.forEach((mode) => {
 
 //shows confetti
 
+let confettiRunning = false;
+
 function celebrateWin() {
+  confettiRunning = true;
   var duration = 3 * 1000; // 3 seconds
   var end = Date.now() + duration;
 
   (function frame() {
+    if (!confettiRunning) return; // stop if canceled
+
     confetti({
       particleCount: 5,
       angle: 60,
@@ -233,3 +243,8 @@ function celebrateWin() {
     }
   })();
 }
+
+function stopConfetti() {
+  confettiRunning = false;
+}
+
