@@ -79,35 +79,35 @@ const gameController = () => {
 
   const display = document.querySelector("[data-display]");
   const playerArray = createPlayers.getPlayer();
-  
+
   // if (playerArray.length < 2) {
-    //   console.error("Players not initialized yet!");
-    //   return {};
-    // }
-    
-    let player1 = playerArray[0];
-    let player2 = playerArray[1];
-    let currentPlayer = player1;
-    console.log(currentPlayer.name);
-    display.textContent = `${currentPlayer.name}'s Turn`;
-    
-    const playRound = (index) => {
+  //   console.error("Players not initialized yet!");
+  //   return {};
+  // }
+
+  let player1 = playerArray[0];
+  let player2 = playerArray[1];
+  let currentPlayer = player1;
+  console.log(currentPlayer.name);
+  display.textContent = `${currentPlayer.name}'s Turn`;
+
+  const playRound = (index) => {
     if (gameover) {
       display.textContent = "START THE GAME TO PLAY";
       return;
     }
     gameBoard.setBoard(index, currentPlayer.markers);
-    
+
     if (cells[index].textContent === "") {
       cells[index].textContent = currentPlayer.markers;
       cells[index].classList.add(currentPlayer.markers.toLowerCase());
     }
-    
+
     checkWinner();
     switchPlayer();
     console.log(gameBoard.getBoard());
   };
-  
+
   const cells = document.querySelectorAll(".cells");
   cells.forEach((cell, index) => {
     cell.addEventListener("click", () => {
@@ -138,6 +138,7 @@ const gameController = () => {
     for (let [a, b, c] of winningCombo) {
       if (board[a] && board[a] === board[b] && board[b] === board[c]) {
         display.textContent = `${currentPlayer.name} wins!`;
+        showDialog();
         gameover = true;
         return;
       }
@@ -173,3 +174,25 @@ modes.forEach((mode) => {
     }
   });
 });
+
+// dialog box opens when either player wins.
+// displays play again and home buttons .
+
+const showDialog = () => {
+  const dialog = document.querySelector("#dialog");
+  const playAgain = document.querySelector("#play-again-btn");
+  const homeBtn = document.querySelector("#home-btn");
+  dialog.showModal();
+
+  playAgain.addEventListener("click", () => {
+    cells.forEach((resetCell) => {
+      resetCell.textContent = "";
+    });
+    gameBoard.reset();
+  });
+
+  homeBtn.addEventListener("click", () => {
+    gameContainer.style.display = "none";
+    gameMode.style.display = "flex";
+  });
+};
