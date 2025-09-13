@@ -58,8 +58,28 @@ header {
   left: 15%;
   flex-direction: column;
   border: 2px solid white;
-  padding: 12px;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: left;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
   
+}
+
+.score-board table {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+.score-board th,
+.score-board td{
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+}
+
+.score-board th {
+  background-color: #ddd;
+  color: black;
 }
 
 .game-container {

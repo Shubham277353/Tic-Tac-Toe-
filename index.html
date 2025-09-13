@@ -70,11 +70,23 @@
     </dialog>
 
     <!--Section 3: GameBoard-->
-    <div class="game-board" >
+    <div class="game-board" style="display: none;">
         <div class="score-board">
             <h1>ScoreBoard</h1>
-            <h2 class="plyaer1Score">Player 1 :</h2>
-            <h2 class="plyaer2Score">Player 2 :</h2>
+            <table>
+                <tr>
+                    <th>Player</th>
+                    <th>Score</th>
+                </tr>
+                <tr>
+                    <td class="score-players" id="player1Name">Player 1</td>
+                    <td class="score-players" id="player1Score">0</td>
+                </tr>
+                <tr>
+                    <td class="score-players" id="player2Name">Player 2</td>
+                    <td class="score-players" id="player2Score">0</td>
+                </tr>
+            </table>
         </div>
         <div class="game-container">
             <div class="game-grid">

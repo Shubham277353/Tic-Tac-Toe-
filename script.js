@@ -18,8 +18,11 @@ const createPlayers = (() => {
   const setScore = (index)=>{
     player[index].score += 1 ;
   }
+  const resetScore = ()=>{
+    player.score = 0;
+  }
 
-  return { getPlayer, setPlayer, setAi , setScore };
+  return { getPlayer, setPlayer, setAi , setScore, resetScore };
 })();
 
 /**
@@ -62,7 +65,7 @@ const playersDetails = (() => {
   const setNumberOfPlayers = (number) => {
     numberOfPlayers = number;
   };
-  const gameContainer = document.querySelector(".game-container");
+  const gameContainer = document.querySelector(".game-board");
   const playerMarker = document.querySelectorAll(".marker");
 
   playerMarker.forEach((marker) => {
@@ -110,15 +113,15 @@ const gameController = () => {
 
   const display = document.querySelector("[data-display]");
   const playerArray = createPlayers.getPlayer();
+  const player1Name = document.querySelector("#player1Name");
+  const player2Name = document.querySelector("#player2Name");
 
-  // if (playerArray.length < 2) {
-  //   console.error("Players not initialized yet!");
-  //   return {};
-  // }
 
   let player1 = playerArray[0];
   let player2 = playerArray[1];
   let currentPlayer = player1;
+  player1Name.textContent = player1.name;
+  player2Name.textContent = player2.name;
   display.textContent = `${currentPlayer.name}'s Turn`;
 
   const playRound = (index) => {
@@ -164,6 +167,8 @@ const gameController = () => {
   //This function as the name suggests checks the winner according to the preset winning combos.
 
   const checkWinner = () => {
+    const player1Score = document.querySelector("#player1Score")
+    const player2Score = document.querySelector("#player2Score")
     const board = gameBoard.getBoard();
     const winningCombo = [
       [0, 1, 2],
@@ -181,8 +186,10 @@ const gameController = () => {
         display.textContent = `${currentPlayer.name} wins!`;
         if(currentPlayer === player1){
           createPlayers.setScore(0);
+          player1Score.textContent = currentPlayer.score;
         }else{
           createPlayers.setScore(1);
+          player2Score.textContent = currentPlayer.score;
         }
         console.log(createPlayers.getPlayer());
         showDialog(currentPlayer.name, false);
@@ -204,7 +211,7 @@ const gameController = () => {
   const dialog = document.querySelector("#dialog");
   const playAgain = document.querySelector("#play-again-btn");
   const homeBtn = document.querySelector("#home-btn");
-  const gameContainer = document.querySelector(".game-container");
+  const gameContainer = document.querySelector(".game-board");
 
   playAgain.addEventListener("click", () => {
     stopConfetti();
@@ -223,7 +230,7 @@ const gameController = () => {
   const showDialog = (name, flag) => {
     const winningText = document.querySelector(".win-text");
     const text = document.querySelector(".text");
-
+    
     if (!flag) {
       winningText.textContent = `${name} Won`;
       celebrateWin();
@@ -233,7 +240,7 @@ const gameController = () => {
     }
     dialog.showModal();
   };
-
+  
   const resetBoard = () => {
     cells.forEach((resetCell) => {
       resetCell.textContent = "";
@@ -242,6 +249,7 @@ const gameController = () => {
     gameBoard.reset();
     gameover = false;
     currentPlayer = player1;
+    createPlayers.resetScore();
     display.textContent = `${currentPlayer.name}'s Turn`;
   };
 
