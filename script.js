@@ -7,15 +7,19 @@ const createPlayers = (() => {
   const getPlayer = () => player;
   const setPlayer = (name, markers) => {
     if (player.length >= 2) player = []; // reset if already 2
-    player.push({ name, markers });
+    player.push({ name, markers , score: 0 });
   };
 
   const setAi = (markers) => {
     if (player.length >= 2) player = [];
     player.push({ name: "Ai", markers });
   };
+  
+  const setScore = (index)=>{
+    player[index].score += 1 ;
+  }
 
-  return { getPlayer, setPlayer, setAi };
+  return { getPlayer, setPlayer, setAi , setScore };
 })();
 
 /**
@@ -175,6 +179,12 @@ const gameController = () => {
     for (let [a, b, c] of winningCombo) {
       if (board[a] && board[a] === board[b] && board[b] === board[c]) {
         display.textContent = `${currentPlayer.name} wins!`;
+        if(currentPlayer === player1){
+          createPlayers.setScore(0);
+        }else{
+          createPlayers.setScore(1);
+        }
+        console.log(createPlayers.getPlayer());
         showDialog(currentPlayer.name, false);
         gameover = true;
         return;

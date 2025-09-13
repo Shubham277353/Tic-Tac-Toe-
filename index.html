@@ -60,30 +60,37 @@
         </div>
     </div>
 
-    
+
     <!-- This section contains the dialog box for play again and home screen tab -->
-     <dialog id="dialog">
+    <dialog id="dialog">
         <h1 class="text">Yay!!!</h1>
         <h1 class="win-text">Player Wins</h1>
         <button class="dialog-buttons" id="play-again-btn">PLAY AGAIN</button>
         <button class="dialog-buttons" id="home-btn">HOME</button>
-     </dialog>
-    
+    </dialog>
+
     <!--Section 3: GameBoard-->
-    <div class="game-container" style="display: none;">
-        <div class="game-grid">
-            <button class="cells"></button>
-            <button class="cells"></button>
-            <button class="cells"></button>
-            <button class="cells"></button>
-            <button class="cells"></button>
-            <button class="cells"></button>
-            <button class="cells"></button>
-            <button class="cells"></button>
-            <button class="cells"></button>
+    <div class="game-board" >
+        <div class="score-board">
+            <h1>ScoreBoard</h1>
+            <h2 class="plyaer1Score">Player 1 :</h2>
+            <h2 class="plyaer2Score">Player 2 :</h2>
         </div>
-        <div class="game-display">
-            <h1 id="display-heading" data-display></h1>
+        <div class="game-container">
+            <div class="game-grid">
+                <button class="cells"></button>
+                <button class="cells"></button>
+                <button class="cells"></button>
+                <button class="cells"></button>
+                <button class="cells"></button>
+                <button class="cells"></button>
+                <button class="cells"></button>
+                <button class="cells"></button>
+                <button class="cells"></button>
+            </div>
+            <div class="game-display">
+                <h1 id="display-heading" data-display></h1>
+            </div>
         </div>
     </div>
 

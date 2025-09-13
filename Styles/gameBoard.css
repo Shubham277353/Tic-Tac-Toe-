@@ -44,12 +44,22 @@ header {
   font-weight: 700;
 }
 
-.controll-buttons button {
-  font-weight: 400;
-  font-size: 1.3rem;
-  padding: 10px;
-  background-color: white;
-  border-radius: 10px;
+.game-board{
+  display: flex;
+  justify-content: center;
+}
+
+.score-board{
+  color: white;
+  display: flex;
+  gap: 10px;
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  flex-direction: column;
+  border: 2px solid white;
+  padding: 12px;
+  
 }
 
 .game-container {
@@ -79,17 +89,6 @@ header {
   background-color: rgba(57, 255, 20, 0.4);
 }
 
-#reset-game {
-  font-size: 1.8rem;
-  margin-top: 20px;
-  padding: 10px 30px;
-  border-radius: 12px;
-  border: none;
-  font-family: monoton;
-  background-color: var(--neon-green-color);
-  cursor: pointer;
-}
-
 #display-heading {
   padding: 8px 80px;
   border: 3px solid black;
@@ -112,3 +111,4 @@ header {
 .o {
   color: var(--o-color);
 }
+
