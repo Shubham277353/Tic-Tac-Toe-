@@ -127,11 +127,10 @@ const gameController = () => {
     if (cells[index].textContent === "") {
       cells[index].textContent = currentPlayer.markers;
       cells[index].classList.add(currentPlayer.markers.toLowerCase());
+      checkWinner();
+      switchPlayer();
+      console.log(gameBoard.getBoard());
     }
-
-    checkWinner();
-    switchPlayer();
-    console.log(gameBoard.getBoard());
   };
 
   const cells = document.querySelectorAll(".cells");
@@ -151,13 +150,14 @@ const gameController = () => {
 
     if (currentPlayer.name === "Ai") {
       let emptyCells = gameBoard.getEmptyCell();
-      let randomIndex = Math.floor(Math.random()*emptyCells.length);
-      if(emptyCells.length !== 0){
-        setTimeout(()=> playRound(emptyCells[randomIndex]),200);
+      let randomIndex = Math.floor(Math.random() * emptyCells.length);
+      if (emptyCells.length !== 0) {
+        setTimeout(() => playRound(emptyCells[randomIndex]), 200);
       }
-
     }
   };
+
+  //This function as the name suggests checks the winner according to the preset winning combos.
 
   const checkWinner = () => {
     const board = gameBoard.getBoard();
@@ -175,7 +175,7 @@ const gameController = () => {
     for (let [a, b, c] of winningCombo) {
       if (board[a] && board[a] === board[b] && board[b] === board[c]) {
         display.textContent = `${currentPlayer.name} wins!`;
-        showDialog();
+        showDialog(currentPlayer.name, false);
         gameover = true;
         return;
       }
@@ -183,6 +183,7 @@ const gameController = () => {
 
     if (!board.includes("")) {
       display.textContent = "It's a tie!";
+      showDialog(null, true);
       gameover = true;
     }
   };
@@ -209,9 +210,18 @@ const gameController = () => {
     dialog.close();
   });
 
-  const showDialog = () => {
+  const showDialog = (name, flag) => {
+    const winningText = document.querySelector(".win-text");
+    const text = document.querySelector(".text");
+
+    if (!flag) {
+      winningText.textContent = `${name} Won`;
+      celebrateWin();
+    } else {
+      text.textContent = "Ohh!!!";
+      winningText.textContent = `It's a tie`;
+    }
     dialog.showModal();
-    celebrateWin();
   };
 
   const resetBoard = () => {

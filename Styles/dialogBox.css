@@ -26,8 +26,8 @@
 }
 .win-text {
   font-size: 2.5rem;
-  color: gold;
-  text-shadow: 1px 1px 8px rgb(255, 217, 0);
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 3px rgb(255, 217, 0);
   font-family: "Audiowide", sans-serif;
 }
 
