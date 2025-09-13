@@ -37,7 +37,13 @@ const gameBoard = (() => {
     board = ["", "", "", "", "", "", "", "", ""];
   };
 
-  return { getBoard, setBoard, reset };
+  const getEmptyCell = () => {
+    return board
+      .map((cell, index) => (cell === "" ? index : null))
+      .filter((i) => i !== null);
+  };
+
+  return { getBoard, setBoard, reset, getEmptyCell };
 })();
 
 /**
@@ -49,9 +55,9 @@ const playerSetupScreen = document.querySelector(".player-setup-screen");
 
 const playersDetails = (() => {
   let numberOfPlayers = 2;
-  const setNumberOfPlayers = (number)=>{
+  const setNumberOfPlayers = (number) => {
     numberOfPlayers = number;
-  }
+  };
   const gameContainer = document.querySelector(".game-container");
   const playerMarker = document.querySelectorAll(".marker");
 
@@ -68,8 +74,7 @@ const playersDetails = (() => {
 
         createPlayers.setPlayer(player1Name, player1Marker);
         createPlayers.setPlayer(player2Name, player2Marker);
-      } 
-      else if (numberOfPlayers === 1) {
+      } else if (numberOfPlayers === 1) {
         const player1Name =
           document.querySelector("#p1-name").value.trim() || "Player 1";
         let chosenMarker = marker.dataset.mark;
@@ -86,7 +91,7 @@ const playersDetails = (() => {
       gameController();
     });
   });
-  return {setNumberOfPlayers};
+  return { setNumberOfPlayers };
 })();
 
 /**
@@ -136,11 +141,21 @@ const gameController = () => {
     });
   });
 
+  // this function contains the switch player logic
+  // current player is Ai , it will choose random index and pass it to the playround function
+
   const switchPlayer = () => {
     if (gameover) return;
     currentPlayer = currentPlayer === player1 ? player2 : player1;
     display.textContent = `${currentPlayer.name}'s Turn`;
-    if(currentPlayer.name === "Ai"){
+
+    if (currentPlayer.name === "Ai") {
+      let emptyCells = gameBoard.getEmptyCell();
+      let randomIndex = Math.floor(Math.random()*emptyCells.length);
+      if(emptyCells.length !== 0){
+        setTimeout(()=> playRound(emptyCells[randomIndex]),200);
+      }
+
     }
   };
 
