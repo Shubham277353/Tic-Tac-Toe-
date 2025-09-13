@@ -10,7 +10,12 @@ const createPlayers = (() => {
     player.push({ name, markers });
   };
 
-  return { getPlayer, setPlayer };
+  const setAi = (markers) => {
+    if (player.length >= 2) player = [];
+    player.push({ name: "Ai", markers });
+  };
+
+  return { getPlayer, setPlayer, setAi };
 })();
 
 /**
@@ -43,22 +48,36 @@ const gameBoard = (() => {
 const playerSetupScreen = document.querySelector(".player-setup-screen");
 
 const playersDetails = (() => {
+  let numberOfPlayers = 2;
+  const setNumberOfPlayers = (number)=>{
+    numberOfPlayers = number;
+  }
   const gameContainer = document.querySelector(".game-container");
   const playerMarker = document.querySelectorAll(".marker");
 
   playerMarker.forEach((marker) => {
     marker.addEventListener("click", () => {
-      const player1Name =
-        document.querySelector("#p1-name").value.trim() || "Player 1";
-      const player2Name =
-        document.querySelector("#p2-name").value.trim() || "Player 2";
+      if (numberOfPlayers === 2) {
+        const player1Name =
+          document.querySelector("#p1-name").value.trim() || "Player 1";
+        const player2Name =
+          document.querySelector("#p2-name").value.trim() || "Player 2";
+        let chosenMarker = marker.dataset.mark;
+        let player1Marker = chosenMarker;
+        let player2Marker = chosenMarker === "X" ? "O" : "X";
 
-      let chosenMarker = marker.dataset.mark;
-      let player1Marker = chosenMarker;
-      let player2Marker = chosenMarker === "X" ? "O" : "X";
-
-      createPlayers.setPlayer(player1Name, player1Marker);
-      createPlayers.setPlayer(player2Name, player2Marker);
+        createPlayers.setPlayer(player1Name, player1Marker);
+        createPlayers.setPlayer(player2Name, player2Marker);
+      } 
+      else if (numberOfPlayers === 1) {
+        const player1Name =
+          document.querySelector("#p1-name").value.trim() || "Player 1";
+        let chosenMarker = marker.dataset.mark;
+        let player1Marker = chosenMarker;
+        let player2Marker = chosenMarker === "X" ? "O" : "X";
+        createPlayers.setPlayer(player1Name, player1Marker);
+        createPlayers.setAi(player2Marker);
+      }
 
       console.log("Players after marker clicked:", createPlayers.getPlayer());
 
@@ -67,6 +86,7 @@ const playersDetails = (() => {
       gameController();
     });
   });
+  return {setNumberOfPlayers};
 })();
 
 /**
@@ -90,7 +110,6 @@ const gameController = () => {
   let player1 = playerArray[0];
   let player2 = playerArray[1];
   let currentPlayer = player1;
-  console.log(currentPlayer.name);
   display.textContent = `${currentPlayer.name}'s Turn`;
 
   const playRound = (index) => {
@@ -113,15 +132,16 @@ const gameController = () => {
   const cells = document.querySelectorAll(".cells");
   cells.forEach((cell, index) => {
     cell.addEventListener("click", () => {
-      console.log("hii");
       playRound(index);
     });
   });
+
   const switchPlayer = () => {
     if (gameover) return;
     currentPlayer = currentPlayer === player1 ? player2 : player1;
     display.textContent = `${currentPlayer.name}'s Turn`;
-    // display.textContent = `${currentPlayer.markers}'s Turn`;
+    if(currentPlayer.name === "Ai"){
+    }
   };
 
   const checkWinner = () => {
@@ -161,11 +181,13 @@ const gameController = () => {
   const gameContainer = document.querySelector(".game-container");
 
   playAgain.addEventListener("click", () => {
+    stopConfetti();
     resetBoard();
     dialog.close();
   });
 
   homeBtn.addEventListener("click", () => {
+    stopConfetti();
     resetBoard();
     gameContainer.style.display = "none";
     gameMode.style.display = "flex";
@@ -191,6 +213,12 @@ const gameController = () => {
   return { playRound };
 };
 
+const startSinglePlayer = () => {
+  const secondPlayerName = document.querySelector("#p2-name");
+  secondPlayerName.style.display = "none";
+  playersDetails.setNumberOfPlayers(1);
+};
+
 /**
  * This section contain the game mode screen DOM and logic.
  * It handles three screens in total : gamemode , playerChoice and the main gameBoard.
@@ -202,28 +230,27 @@ const modes = document.querySelectorAll(".players");
 modes.forEach((mode) => {
   mode.addEventListener("click", () => {
     const selectedMode = mode.dataset.choice;
-    console.log(selectedMode);
     gameMode.style.display = "none";
     playerSetupScreen.style.display = "flex";
-    if (selectedMode === 2) {
-      startTwoPlayerGame();
-    } else if (selectedMode === 1) {
-      startSinglePlayerGame();
+    if (selectedMode === "1") {
+      console.log(selectedMode);
+      startSinglePlayer();
     }
   });
 });
 
 //shows confetti
 
-let confettiRunning = false;
+let confettiActive = false;
 
 function celebrateWin() {
-  confettiRunning = true;
-  var duration = 3 * 1000; // 3 seconds
+  confettiActive = true;
+
+  var duration = 3 * 1000;
   var end = Date.now() + duration;
 
   (function frame() {
-    if (!confettiRunning) return; // stop if canceled
+    if (!confettiActive) return;
 
     confetti({
       particleCount: 5,
@@ -245,6 +272,6 @@ function celebrateWin() {
 }
 
 function stopConfetti() {
-  confettiRunning = false;
+  confettiActive = false;
+  if (confetti.reset) confetti.reset();
 }
-
