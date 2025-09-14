@@ -204,6 +204,8 @@ const gameController = () => {
       [0, 4, 8],[2, 4, 6], // diagonals
     ];
 
+    // checks each index of the winnigCombo and matches it with the board 
+    // if matched the winner's score is increased by one and gameover is set to true.
     for (let [a, b, c] of winningCombo) {
       if (board[a] && board[a] === board[b] && board[b] === board[c]) {
         display.textContent = `${currentPlayer.name} wins!`;
@@ -219,6 +221,7 @@ const gameController = () => {
       }
     }
 
+    // if board contains no empty space and no winner is decided then its a tie.
     if (!board.includes("")) {
       display.textContent = "It's a tie!";
       showDialog(null, true);
@@ -226,24 +229,26 @@ const gameController = () => {
     }
   };
 
-  // dialog box opens when either player wins.
-  // displays play again and home buttons .
 
+  // dialog box opens when either player wins or its a tie .
+  // displays play again and home buttons .
   const dialog = document.querySelector("#dialog");
   const playAgain = document.querySelector("#play-again-btn");
   const homeBtn = document.querySelector("#home-btn");
-  const gameContainer = document.querySelector(".game-board");
 
+  //resets the board and shows a prebuilt confetti animation and closes dialog box.
   playAgain.addEventListener("click", () => {
     stopConfetti();
     resetBoard();
     dialog.close();
   });
 
+  //reloads the whole page when clicked.
   homeBtn.addEventListener("click", () => {
     location.reload();
   });
 
+  // funciton to show confetti if win is true , celebratewin is called other wise not.
   const showDialog = (name, flag) => {
     const winningText = document.querySelector(".win-text");
     const text = document.querySelector(".text");
@@ -258,6 +263,7 @@ const gameController = () => {
     dialog.showModal();
   };
 
+  //this function resets the board and the Gameboard DOM and resets the currentplayer to player 1.
   const resetBoard = () => {
     cells.forEach((resetCell) => {
       resetCell.textContent = "";
@@ -272,17 +278,14 @@ const gameController = () => {
   return { playRound };
 };
 
+//if selected mode is single player the second player's name is not displayed .
 const startSinglePlayer = () => {
   const secondPlayerName = document.querySelector("#p2-name");
   secondPlayerName.style.display = "none";
   playersDetails.setNumberOfPlayers(1);
 };
 
-/**
- * This section contain the game mode screen DOM and logic.
- * It handles three screens in total : gamemode , playerChoice and the main gameBoard.
- */
-
+//This section contain the game mode screen DOM and logic.
 const gameMode = document.querySelector(".game-mode-choice-screen");
 const modes = document.querySelectorAll(".players");
 

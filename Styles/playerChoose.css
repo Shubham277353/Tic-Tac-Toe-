@@ -13,6 +13,10 @@
   color: white;
 }
 
+@media(max-width:500){
+  #player-setup-
+}
+
 .player-setup {
   border: var(--border);
   margin: 20px;
