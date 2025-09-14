@@ -1,34 +1,59 @@
-/* This module is for player creation.
- * This module returns player and marker as objects
+/**
+ * This module is the player creation facotry function
+ * it hides the player array from gloabal scope and only allow changes through set player array
+ * it used to set a new ai player for single player mode.
+ * it also sets the score of a player object and updates the dom through updateScoreBoard().
  */
 
 const createPlayers = (() => {
   let player = [];
   const getPlayer = () => player;
   const setPlayer = (name, markers) => {
-    if (player.length >= 2) player = []; // reset if already 2
-    player.push({ name, markers , score: 0 });
+    if (player.length >= 2) player = [];
+    player.push({ name, markers, score: 0, isAi: false });
   };
 
   const setAi = (markers) => {
     if (player.length >= 2) player = [];
-    player.push({ name: "Ai", markers });
+    player.push({ name: "Ai", markers, score: 0, isAi: true });
+    updateScoreBoard();
   };
-  
-  const setScore = (index)=>{
-    player[index].score += 1 ;
-  }
-  const resetScore = ()=>{
-    player.score = 0;
-  }
 
-  return { getPlayer, setPlayer, setAi , setScore, resetScore };
+  const setScore = (index) => {
+    player[index].score += 1;
+    updateScoreBoard();
+  };
+  const resetScore = () => {
+    player.forEach((p) => {
+      p.score = 0;
+    });
+    updateScoreBoard();
+  };
+
+  const updateScoreBoard = () => {
+    const player1 = player[0] || {};
+    const player2 = player[1] || {};
+
+    const p1NameEl = document.querySelector("#player1Name");
+    const p2NameEl = document.querySelector("#player2Name");
+    const p1ScoreEl = document.querySelector("#player1Score");
+    const p2ScoreEl = document.querySelector("#player2Score");
+
+    if (p1NameEl) p1NameEl.textContent = player1.name || "Player 1";
+    if (p2NameEl) p2NameEl.textContent = player2.name || "Player 2";
+
+    if (p1ScoreEl) p1ScoreEl.textContent = player1.score ?? 0;
+    if (p2ScoreEl) p2ScoreEl.textContent = player2.score ?? 0;
+  };
+
+  return { getPlayer, setPlayer, setAi, setScore, resetScore };
 })();
 
 /**
  * This module is for adding the gameboard.
  * This module stores game board in the form of an array.
- * It returns getBoard(),setBoard() and reset() as objects.
+ * it also provides emptycells array for ai player.
+ * It returns getBoard(),setBoard() , getEmptyCell and reset() as objects.
  */
 
 const gameBoard = (() => {
@@ -55,7 +80,8 @@ const gameBoard = (() => {
 
 /**
  * player setup module section , in this the players name and marker are set.
- * this returns the players and markers.
+ * this section checks for the number of players and sets the player name and marker according to that.
+ * after setting the players name and marker it calso the gameController() function.
  */
 
 const playerSetupScreen = document.querySelector(".player-setup-screen");
@@ -93,8 +119,10 @@ const playersDetails = (() => {
 
       console.log("Players after marker clicked:", createPlayers.getPlayer());
 
+      // hides the player setup screen and show the gameboard
       playerSetupScreen.style.display = "none";
       gameContainer.style.display = "flex";
+
       gameController();
     });
   });
@@ -102,21 +130,20 @@ const playersDetails = (() => {
 })();
 
 /**
- * This is the game controller module it controls the flow of the game
+ * This is the game controller module it controls the complete flow of the game .
+ * It sets the players and assign them to the currentPlayer which helps use the current player in other functions
  * This contain playRound function which plays the game and checks winner
- * It contains switchPlayer() which switches player after every move.
- * it also contains checkwinner function which checks the winner of the game with prestored board postions if even one set of positions of the stored matches with the gameBaoard the winner is decided otherwise its a draw.
+ * It contains switchPlayer() which switches player after every move and if player isAi it plays the ai's move.
+ * It also contains checkwinner function which checks the winner of the game with prestored board postions if even one set of positions of the stored matches with the gameBaoard the winner is decided otherwise its a draw.
  */
 
 const gameController = () => {
   let gameover = false;
 
   const display = document.querySelector("[data-display]");
-  const playerArray = createPlayers.getPlayer();
   const player1Name = document.querySelector("#player1Name");
+  const playerArray = createPlayers.getPlayer();
   const player2Name = document.querySelector("#player2Name");
-
-
   let player1 = playerArray[0];
   let player2 = playerArray[1];
   let currentPlayer = player1;
@@ -125,75 +152,69 @@ const gameController = () => {
   display.textContent = `${currentPlayer.name}'s Turn`;
 
   const playRound = (index) => {
+    // if gameover is true no other cell will be clicked
     if (gameover) {
-      display.textContent = "START THE GAME TO PLAY";
       return;
     }
     gameBoard.setBoard(index, currentPlayer.markers);
 
+    // sets the DOM if the clicked cell is empty
     if (cells[index].textContent === "") {
       cells[index].textContent = currentPlayer.markers;
       cells[index].classList.add(currentPlayer.markers.toLowerCase());
+      console.log(currentPlayer);
       checkWinner();
       switchPlayer();
       console.log(gameBoard.getBoard());
     }
   };
 
+  //checks the index of the button clicked
   const cells = document.querySelectorAll(".cells");
   cells.forEach((cell, index) => {
     cell.addEventListener("click", () => {
       playRound(index);
     });
   });
-
-  // this function contains the switch player logic
-  // current player is Ai , it will choose random index and pass it to the playround function
-
+  
+  // switch player function
   const switchPlayer = () => {
+    //if game is over , players will not be switched
     if (gameover) return;
     currentPlayer = currentPlayer === player1 ? player2 : player1;
-    display.textContent = `${currentPlayer.name}'s Turn`;
 
-    if (currentPlayer.name === "Ai") {
+    // if current player is ai checks for available empty cells.
+    // and use the index to call the play found fuction after a delay of 3ms.
+    if (currentPlayer.isAi) {
       let emptyCells = gameBoard.getEmptyCell();
       let randomIndex = Math.floor(Math.random() * emptyCells.length);
       if (emptyCells.length !== 0) {
-        setTimeout(() => playRound(emptyCells[randomIndex]), 200);
+        setTimeout(() => playRound(emptyCells[randomIndex]), 300);
       }
     }
+    display.textContent = `${currentPlayer.name}'s Turn`;
   };
 
   //This function as the name suggests checks the winner according to the preset winning combos.
-
   const checkWinner = () => {
-    const player1Score = document.querySelector("#player1Score")
-    const player2Score = document.querySelector("#player2Score")
     const board = gameBoard.getBoard();
     const winningCombo = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8], // rows
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8], // cols
-      [0, 4, 8],
-      [2, 4, 6], // diagonals
+      [0, 1, 2], [3, 4, 5],[6, 7, 8], // rows
+      [0, 3, 6],[1, 4, 7],[2, 5, 8], // cols
+      [0, 4, 8],[2, 4, 6], // diagonals
     ];
 
     for (let [a, b, c] of winningCombo) {
       if (board[a] && board[a] === board[b] && board[b] === board[c]) {
         display.textContent = `${currentPlayer.name} wins!`;
-        if(currentPlayer === player1){
+        if (currentPlayer === player1) {
           createPlayers.setScore(0);
-          player1Score.textContent = currentPlayer.score;
-        }else{
+        } else {
           createPlayers.setScore(1);
-          player2Score.textContent = currentPlayer.score;
         }
-        console.log(createPlayers.getPlayer());
         showDialog(currentPlayer.name, false);
         gameover = true;
+        console.log(createPlayers.getPlayer());
         return;
       }
     }
@@ -220,17 +241,13 @@ const gameController = () => {
   });
 
   homeBtn.addEventListener("click", () => {
-    stopConfetti();
-    resetBoard();
-    gameContainer.style.display = "none";
-    gameMode.style.display = "flex";
-    dialog.close();
+    location.reload();
   });
 
   const showDialog = (name, flag) => {
     const winningText = document.querySelector(".win-text");
     const text = document.querySelector(".text");
-    
+
     if (!flag) {
       winningText.textContent = `${name} Won`;
       celebrateWin();
@@ -240,7 +257,7 @@ const gameController = () => {
     }
     dialog.showModal();
   };
-  
+
   const resetBoard = () => {
     cells.forEach((resetCell) => {
       resetCell.textContent = "";
@@ -249,7 +266,6 @@ const gameController = () => {
     gameBoard.reset();
     gameover = false;
     currentPlayer = player1;
-    createPlayers.resetScore();
     display.textContent = `${currentPlayer.name}'s Turn`;
   };
 
