@@ -46,11 +46,11 @@ If you’d like to add new features, fix bugs, or improve design, follow these s
 
 1. Fork the repository
 2. Create a new branch
-    git checkout -b feature-name
+   - git checkout -b feature-name
 3. Make your changes
 4. Commit and push
-    git commit -m "Added feature XYZ"
-    git push origin feature-name
+   - git commit -m "Added feature XYZ"
+   - git push origin feature-name
 5. Open a Pull Request
 
 ---
