@@ -44,15 +44,9 @@ header {
   font-weight: 700;
 }
 
-@media (max-width: 500px) {
-  .heading h1 {
-    font-size: 1.8rem;
-    font-weight: 500;
-  }
-}
-
 .game-board {
   display: flex;
+  flex-direction: column;
   justify-content: center;
 }
 
@@ -123,6 +117,7 @@ header {
   font-weight: 700;
   font-family: var(--font-family);
   margin-top: 1rem;
+  border-radius: 8px;
 }
 
 .x,
@@ -136,4 +131,46 @@ header {
 }
 .o {
   color: var(--o-color);
+}
+
+@media (max-width: 500px) {
+  .heading h1 {
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+
+  .game-grid {
+    margin-top: 40px;
+    border: 2px solid var(--neon-green-color);
+  }
+
+  .cells {
+    width: 120px;
+    height: 120px;
+    border: 2px solid var(--neon-green-color);
+  }
+  #display-heading {
+    padding: 6px 50px;
+    font-size: 1.6rem;
+    margin-top: 0.6rem;
+  }
+  .x,
+  .o {
+    font-size: 2.8rem;
+  }
+    .score-board {
+    /* margin-top: 20px; */
+    position: static;
+    padding: 0.5rem;
+    margin: 20px;
+  }
+  .score-board h1 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+  .score-board th,
+  .score-board td {
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+  }
 }
